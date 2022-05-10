@@ -12,8 +12,10 @@ var questionIndex = 0;
 var questionEl = document.getElementById('question-text');
 var choicesCon = document.getElementById('choices');
 var submitCon = document.getElementById('submit');
-var submitBtn = document.getElementById('submit-btn')
-var initialInput = document.getElementById('initials')
+var submitBtn = document.getElementById('submit-btn');
+var initialInput = document.getElementById('initials');
+var scoreBoardEl = document.getElementById('scoreboard');
+var highscoreEl = document.getElementById('highscore')
 // TODO: Create questions and answers array
 var questions = [
     {
@@ -36,23 +38,22 @@ var questions = [
         choices: ['Adams', 'Buchanan', 'Taylor', 'Lincoln'],
         answer: 'Lincoln'
     },
-    
+
 ]
 
 // TODO: Create a time function 
-function timeTick(){
-    time=time-1;
+function timeTick() {
+    time = time - 1;
     timerEl.textContent = time
-    if (time === 0)
-    {
+    if (time === 0) {
         endGame()
     };
 
-// -- reduces the time by an increment using setInterval method
-// -- if time === 0 then end quiz
+    // -- reduces the time by an increment using setInterval method
+    // -- if time === 0 then end quiz
 }
 // TODO: Create Start Quiz function
-function startQuiz(){
+function startQuiz() {
     timerId = setInterval(timeTick, 1000)
     timerEl.textContent = time
     startButton.setAttribute('class', 'hide');
@@ -62,7 +63,7 @@ function startQuiz(){
 
 };
 // -- get the first question 
-function getQuestions(){
+function getQuestions() {
     var currentQuestion = questions[questionIndex];
     questionEl.textContent = currentQuestion.question;
     var choices = currentQuestion.choices
@@ -75,14 +76,14 @@ function getQuestions(){
         choicesCon.appendChild(choiceBtn);
     });
 }
-function choiceClick(){
-    if(this.textContent != questions[questionIndex].answer){
-        time-=15;
+function choiceClick() {
+    if (this.textContent != questions[questionIndex].answer) {
+        time -= 15;
         timerEl.textContent = time
     }
     // End game function ***** START HERE*****
-    questionIndex++ 
-    if(questionIndex  === questions.length) {
+    questionIndex++
+    if (questionIndex === questions.length) {
         endGame()
     } else {
         getQuestions()
@@ -93,56 +94,59 @@ function endGame() {
     submitCon.removeAttribute('class');
     highScore.removeAttribute('class');// Cant get highscore to show with style???????
     clearInterval(timerId);
-    
-};
-function submitScore(){
-    // gets our input initials
-    var scores = localStorage
-    
-        
-    
 
+};
+function submitScore() {
+    var highScores = JSON.parse(localStorage.getItem('savedScores')) || [];
+
+    // gets our input initials
+    var initials = initialInput.value
+    var newScore = { initials, score: time };
+    highScores.push(newScore)
+    var myJSON = JSON.stringify(highScores);
 
     // initials and time go into an Object to be pushed into the array
-    localStorage.setItem('initials', 'timer')
+    localStorage.setItem('savedScores', myJSON);
     // checks for localstorage to get previous initials 
-
     // if there is localstorage push into that 
     // if there isnt push into empty array then setItem to localstorage
     // should use JSON.stringify when using setItem
-    
-    
+
 
 }
 
-function getScores(){
+function getScores() {
+    var highScores = JSON.parse(localStorage.getItem('savedScores')) || [];
+    scoreBoardEl.innerHTML = ``;
     
     // hides submit scores and other containers
-    submitBtn.removeAttribute('class', 'hide');
-    initialInput.removeAttribute('class', 'hide');
+    highscoreEl.removeAttribute('class');
+    submitCon.setAttribute('class', 'hide');
+    quizCon.setAttribute('class', 'hide');
     // check localstorage using getItem 
-    let initials = localStorage.getItem(initials);
-    let timer = localStorage.getItem(timer);
+    highScores.forEach((scoreValue) => {
+        let { initials, score } = scoreValue;
+        let scoreEl = document.createElement('li')
+        scoreEl.textContent = `${initials} || ${score}`
+        scoreBoardEl.appendChild(scoreEl)
+    })
     // if there is localstorage use foreach to create scores
     // if there isnt any localstorage Just display 
 };
 
-startButton.addEventListener('click', function(e){
-e.preventDefault()
-startQuiz()
+startButton.addEventListener('click', function (e) {
+    e.preventDefault()
+    startQuiz()
 });
-submitBtn.addEventListener('submit', function(e){
-e.preventDefault()
-
-});
-submitBtn.addEventListener('click', function(e){
+submitBtn.addEventListener('click', function (e) {
     e.preventDefault()
     submitScore()
+    getScores()
 });
-/*highScore.addEventListener('click', function(e){
+highScore.addEventListener('click', function(e){
     e.preventDefault()
     getScores()
-} );*/
+} );
 
 
 // WHEN I answer a question
