@@ -34,7 +34,7 @@ var questions = [
         answer: 'Tallahassee'
     },
     {
-        question: 'Who was the 16th President?',
+        question: 'Who was the 16th President of the United States of America?',
         choices: ['Adams', 'Buchanan', 'Taylor', 'Lincoln'],
         answer: 'Lincoln'
     },
@@ -89,10 +89,11 @@ function choiceClick() {
         getQuestions()
     }
 }
+
 function endGame() {
     quizCon.setAttribute('class', 'hide');
     submitCon.removeAttribute('class');
-    highScore.removeAttribute('class');// Cant get highscore to show with style???????
+    highScore.removeAttribute('class');
     clearInterval(timerId);
 
 };
@@ -127,7 +128,7 @@ function getScores() {
     highScores.forEach((scoreValue) => {
         let { initials, score } = scoreValue;
         let scoreEl = document.createElement('li')
-        scoreEl.textContent = `${initials} || ${score}`
+        scoreEl.textContent = `${initials} - ${score}`
         scoreBoardEl.appendChild(scoreEl)
     })
     // if there is localstorage use foreach to create scores

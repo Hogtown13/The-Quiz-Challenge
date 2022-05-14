@@ -11,7 +11,8 @@ h1 {
 }
 
 #timer {
-    text-align: right;
+    
+    text-align: center;
     font-size: 35px;
     color: rgb(33, 153, 20);
 }
@@ -23,7 +24,7 @@ h1 {
     font-size: 25px;
     align-content: center;
     flex-direction: column;
-    justify-content: space-evenly
+    justify-content: center;
 }
 
 .card {
@@ -68,4 +69,47 @@ h1 {
 
 #initials {
     font-size: x-large;
+    color:rgb(44, 90, 158);
+}
+
+#scoreboard {
+    font-size: 30px;
+    color: rgb(44, 90, 158);
+}
+
+#submit {
+    font-size: 30px;
+    color: rgb(44, 90, 158);
+}
+
+#info {
+    display: flex;
+    justify-content: center;
+    color: rgb(44, 90, 158);
+    font-size: 20px;
+}
+
+#submit-btn {
+    background-color: rgb(44, 90, 158);
+    border: none;
+    color: rgb(224, 224, 224);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 15px;
+}
+
+#btn-high {
+    background-color: rgb(44, 90, 158);
+    border: none;
+    color: rgb(224, 224, 224);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
 }
